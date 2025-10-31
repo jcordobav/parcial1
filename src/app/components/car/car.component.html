@@ -24,4 +24,7 @@
       </table>
     </div>
   </div>
+  <div *ngFor="let brand of this.brands">
+    <p>Total {{ brand.name }}: {{ brand.totalCars }}</p>
+  </div>
 </div>

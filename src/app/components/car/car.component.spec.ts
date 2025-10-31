@@ -84,4 +84,63 @@ describe('CarComponent', () => {
     expect(src).toMatch(/image\.png$/);
     expect(imgDebug.nativeElement.getAttribute('alt')).toContain('Imagen del carro');
   });
+
+  it('calculateTotalBrandCars should populate brands with unique names and correct totals', () => {
+    const mockCars = [
+      { marca: 'Toyota', linea: 'Corolla', modelo: 2020 } as any,
+      { marca: 'Honda', linea: 'Civic', modelo: 2019 } as any,
+      { marca: 'Toyota', linea: 'Yaris', modelo: 2021 } as any
+    ];
+
+    fixture = TestBed.createComponent(CarComponent);
+    component = fixture.componentInstance;
+
+    component.cars = mockCars;
+    component.brands = []; // asegurarse vacío antes de calcular
+
+    component.calculateTotalBrandCars();
+
+    expect(component.brands.length).toBe(2);
+
+    const toyota = component.brands.find(b => b.name === 'Toyota');
+    const honda = component.brands.find(b => b.name === 'Honda');
+
+    expect(toyota).toBeTruthy();
+    expect(honda).toBeTruthy();
+    expect(toyota!.totalCars).toBe(2);
+    expect(honda!.totalCars).toBe(1);
+  });
+
+  it('calculateTotalBrandCars should leave brands empty when cars is empty', () => {
+    fixture = TestBed.createComponent(CarComponent);
+    component = fixture.componentInstance;
+
+    component.cars = [];
+    component.brands = [];
+
+    component.calculateTotalBrandCars();
+
+    expect(component.brands.length).toBe(0);
+  });
+
+  it('calculateTotalBrandCars increments totals if called multiple times (current implementation accumulates)', () => {
+    const mockCars = [
+      { marca: 'Kia', linea: 'Rio', modelo: 2018 } as any
+    ];
+
+    fixture = TestBed.createComponent(CarComponent);
+    component = fixture.componentInstance;
+
+    component.cars = mockCars;
+    component.brands = [];
+
+    component.calculateTotalBrandCars(); // primera ejecución
+    component.calculateTotalBrandCars(); // segunda ejecución (se observa comportamiento actual)
+
+    const kia = component.brands.find(b => b.name === 'Kia');
+    expect(kia).toBeTruthy();
+    expect(kia!.totalCars).toBe(2); // 1 + 1 porque el método no resetea brands
+  });
+
+
 });
