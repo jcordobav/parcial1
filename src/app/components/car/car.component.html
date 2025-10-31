@@ -1,3 +1,27 @@
-<p>
-  car works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="../../../assets/image.png" alt="Imagen del carro" class="img-fluid">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Marca</th>
+            <th>Linea</th>
+            <th>Modelo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of cars">
+            <td>{{ car.marca }}</td>
+            <td>{{ car.linea }}</td>
+            <td>{{ car.modelo }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

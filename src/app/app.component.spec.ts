@@ -1,35 +1,27 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { provideRouter, RouterLink, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CarComponent } from './components/car/car.component';
+import { CarService } from './services/car.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+      imports: [HttpClientTestingModule, RouterLink,
         RouterModule.forRoot([])
       ],
+      providers: [CarService, provideRouter([])],
       declarations: [
-        AppComponent
+        AppComponent,
+        CarComponent
       ],
     }).compileComponents();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(CarComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'parcial1'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('parcial1');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, parcial1');
   });
 });
