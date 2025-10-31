@@ -27,6 +27,25 @@ describe('CarComponent', () => {
     }).compileComponents();
   });
 
+  it('renderiza el encabezado y 3 filas en la tabla cuando hay 3 vehículos', () => {
+    const threeCars = [
+      { marca: 'Ford', linea: 'Focus', modelo: 2015 } as any,
+      { marca: 'Mazda', linea: '3', modelo: 2016 } as any,
+      { marca: 'Nissan', linea: 'Sentra', modelo: 2017 } as any
+    ];
+
+    carServiceSpy.getCars.and.returnValue(of(threeCars));
+    fixture = TestBed.createComponent(CarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges(); // ejecuta ngOnInit y renderiza la plantilla
+
+    const headerRow = fixture.debugElement.query(By.css('thead tr'));
+    expect(headerRow).toBeTruthy();
+
+    const bodyRows = fixture.debugElement.queryAll(By.css('tbody tr'));
+    expect(bodyRows.length).toBe(3);
+  });
+
   it('should create', () => {
     carServiceSpy.getCars.and.returnValue(of([]));
     fixture = TestBed.createComponent(CarComponent);
